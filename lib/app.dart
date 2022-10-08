@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:log_viewer/ui/app_router.dart';
 import 'package:log_viewer/ui/style.dart';
 
@@ -12,8 +13,16 @@ class LogViewerApp extends StatelessWidget {
     return MaterialApp(
       title: appTitle,
       debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: lightTheme,
+      theme: lightTheme.copyWith(
+        textTheme: Theme.of(context).textTheme.apply(
+              fontFamily: GoogleFonts.poppins().fontFamily,
+            ),
+      ),
+      darkTheme: lightTheme.copyWith(
+        textTheme: Theme.of(context).textTheme.apply(
+              fontFamily: GoogleFonts.poppins().fontFamily,
+            ),
+      ),
       initialRoute: homeScreenRoute,
       onGenerateRoute: onGenerateRoute,
     );

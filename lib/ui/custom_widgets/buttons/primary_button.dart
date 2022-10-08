@@ -15,7 +15,10 @@ class PrimaryElevatedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       child: !isLoading
-          ? Text(label.toUpperCase())
+          ? Text(
+              label.toUpperCase(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            )
           : const ButtonLoadingIndicator(),
     );
   }
