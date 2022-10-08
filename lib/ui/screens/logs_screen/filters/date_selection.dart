@@ -55,12 +55,12 @@ class _DateSelectionState extends State<DateSelectionWidget> {
 
   void _showDateTimePicker() async {
     DateTime today = DateTime.now();
-    Duration oneDay = const Duration(days: 1);
+    Duration oneYear = const Duration(days: 365);
     DateTime? date = await showDatePicker(
       context: context,
       initialDate: today,
-      firstDate: today.subtract(oneDay),
-      lastDate: today.add(oneDay),
+      firstDate: today.subtract(oneYear),
+      lastDate: today.add(oneYear),
     );
     if (date == null) return;
     TimeOfDay? time = await showTimePicker(

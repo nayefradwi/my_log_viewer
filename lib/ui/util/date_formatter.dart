@@ -5,6 +5,6 @@ String formatDayMonthHourMinuteSeconds(
   String dateSplit = "/",
   String hourSplit = ":",
 }) {
-  return formatDate(dateTime.toLocal(),
-      [dd, dateSplit, mm, " ", HH, hourSplit, nn, hourSplit, ss]);
+  return formatDate(
+      dateTime, [dd, dateSplit, mm, " ", HH, hourSplit, nn, hourSplit, ss]);
 }

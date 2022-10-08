@@ -28,7 +28,7 @@ class AppLog {
   Object? errorObject;
   late Timestamp _timestamp;
   DateTime get timeStamp {
-    return _timestamp.toDateTime();
+    return _timestamp.toDateTime().toLocal();
   }
 
   late AppLogType type;

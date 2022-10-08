@@ -16,22 +16,12 @@ class SearchTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LogsScreenBloc, LogsScreenState>(
-      buildWhen: (previous, current) => current is LogsScreenFilterClearedState,
-      listenWhen: (previous, current) =>
-          current is LogsScreenFilterClearedState,
-      listener: (context, state) {
-        if (current is LogsScreenFilterClearedState) controller.clear();
-      },
-      builder: (context, state) {
-        return TextField(
-          onSubmitted: onSubmitted,
-          controller: controller,
-          onChanged: onChanged,
-          decoration: const InputDecoration(
-              hintText: "Search", suffixIcon: Icon(Icons.search)),
-        );
-      },
+    return TextField(
+      onSubmitted: onSubmitted,
+      controller: controller,
+      onChanged: onChanged,
+      decoration: const InputDecoration(
+          hintText: "Search", suffixIcon: Icon(Icons.search)),
     );
   }
 }

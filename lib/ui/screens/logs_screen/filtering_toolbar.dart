@@ -40,12 +40,12 @@ class _FilteringToolBarState extends State<FilteringToolBar> {
           const SizedBox(width: 16),
           DateSelectionWidget(
             label: "From",
-            onDateSelected: (time) {},
+            onDateSelected: context.read<LogsScreenBloc>().changeFrom,
           ),
           const SizedBox(width: 8),
           DateSelectionWidget(
             label: "To",
-            onDateSelected: (time) {},
+            onDateSelected: context.read<LogsScreenBloc>().changeTo,
           ),
           const SizedBox(width: 8),
           SortingToggle(

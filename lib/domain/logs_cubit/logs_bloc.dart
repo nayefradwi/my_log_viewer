@@ -31,7 +31,7 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   void _filter() {
     List<AppLog> logs = _fromUnFilteredLogs ? [..._unFilteredLogs] : state.logs;
     _sort(logs);
-    _filterDate(logs);
+    logs = _filterDate(logs);
     logs = _filterBySearchTerm(logs);
     emit(LogsScreenFilteredState(logs));
   }
@@ -46,15 +46,35 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
     _currentIsAscending = isAscending;
   }
 
-  void _filterDate(List<AppLog> logs) {
-    if (_from == null) return;
+  List<AppLog> _filterDate(List<AppLog> logs) {
+    if (_from == null) return logs;
     if (_from != null && _to == null) return _filterByDate(logs);
     return _filterByDateRange(logs);
   }
 
-  void _filterByDate(List<AppLog> logs) {}
+  List<AppLog> _filterByDate(List<AppLog> logs) {
+    List<AppLog> logsThatAreSameMoment = [];
+    for (AppLog log in logs) {
+      if (_isSameMoment(log.timeStamp, _from!)) {
+        logsThatAreSameMoment.add(log);
+      }
+    }
+    _fromUnFilteredLogs = false;
+    return logsThatAreSameMoment;
+  }
 
-  void _filterByDateRange(List<AppLog> logs) {}
+  bool _isSameMoment(DateTime d1, DateTime d2) {
+    return d1.year == d2.year &&
+        d1.month == d2.month &&
+        d1.day == d2.day &&
+        d1.hour == d2.hour &&
+        d1.minute == d2.minute;
+  }
+
+  List<AppLog> _filterByDateRange(List<AppLog> logs) {
+    _fromUnFilteredLogs = false;
+    return logs;
+  }
 
   List<AppLog> _filterBySearchTerm(List<AppLog> logs) {
     if (_searchTerm == null) return logs;
