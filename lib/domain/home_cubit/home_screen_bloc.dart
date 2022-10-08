@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:log_viewer/data/repos/logs_database.dart';
+import 'package:log_viewer/data/repos/logs_repo.dart';
 import 'package:log_viewer/data/services/file_picker.dart';
-import 'package:mime/mime.dart';
 
 import 'home_screen_states.dart';
 
@@ -18,6 +15,7 @@ class HomeScreenBloc extends Cubit<HomeScreenState> {
     try {
       String? filePath = await filePicker.pickFile(
           "Select Logs File", supportedFileExtensions);
+      emit(HomeScreenLoadingState());
       if (filePath == null) return _emitEmptyState();
       await _loadDatabase(filePath);
     } catch (e) {
@@ -31,7 +29,7 @@ class HomeScreenBloc extends Cubit<HomeScreenState> {
   }
 
   Future<void> _loadDatabase(String filePath) async {
-    LogsDatabase database = await LogsDatabase.createLogsDatabase(filePath);
+    LogsRepo database = await LogsRepo.createLogsRepo(filePath);
     emit(HomeScreenFileChosenState(database));
   }
 }

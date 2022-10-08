@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_viewer/app.dart';
 import 'package:log_viewer/domain/home_cubit/home_screen_bloc.dart';
 import 'package:log_viewer/domain/home_cubit/home_screen_states.dart';
+import 'package:log_viewer/ui/app_router.dart';
 import 'package:log_viewer/ui/custom_widgets/containers/primary_container.dart';
 import 'package:log_viewer/ui/custom_widgets/notifications/app_snackbar.dart';
 import 'package:log_viewer/ui/custom_widgets/texts/h1.dart';
@@ -35,9 +36,12 @@ class HomeScreen extends StatelessWidget {
 
   void _listener(BuildContext context, HomeScreenState state) {
     if (state is HomeScreenErrorState) {
-      return AppSnackBar.show(context, state.errorMessage);
+      AppSnackBar.show(context, state.errorMessage);
     } else if (state is HomeScreenFileChosenState) {
-      return AppSnackBar.show(context, "nice");
+      Navigator.of(context).pushNamed(
+        logsScreenRoute,
+        arguments: state.logsDatabase,
+      );
     }
   }
 }

@@ -1,11 +1,11 @@
-import 'package:log_viewer/data/repos/logs_database.dart';
+import 'package:log_viewer/data/repos/logs_repo.dart';
 
 class HomeScreenState {}
 
 class HomeScreenLoadingState extends HomeScreenState {}
 
 class HomeScreenFileChosenState extends HomeScreenState {
-  final LogsDatabase logsDatabase;
+  final LogsRepo logsDatabase;
   HomeScreenFileChosenState(this.logsDatabase);
 }
 
