@@ -5,11 +5,14 @@ const double borderRadius16 = 16;
 class PrimaryRoundedBorderContainer extends StatelessWidget {
   final Widget? child;
   final EdgeInsets? padding, margin;
+  final double? height, width;
   const PrimaryRoundedBorderContainer({
     super.key,
     this.child,
     this.padding = const EdgeInsets.all(10),
     this.margin = const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+    this.height,
+    this.width,
   });
 
   @override
@@ -23,6 +26,7 @@ class PrimaryRoundedBorderContainer extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(borderRadius16),
       ),
+      child: child,
     );
   }
 }

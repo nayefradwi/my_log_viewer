@@ -13,7 +13,7 @@ class LogViewerApp extends StatelessWidget {
       title: appTitle,
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      darkTheme: darkTheme,
+      darkTheme: lightTheme,
       initialRoute: homeScreenRoute,
       onGenerateRoute: onGenerateRoute,
     );

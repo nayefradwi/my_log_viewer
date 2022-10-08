@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 const double h1Size = 28;
 
@@ -12,7 +13,9 @@ class H1Text extends StatelessWidget {
     return Text(
       text,
       textAlign: align,
-      style: const TextStyle(fontSize: h1Size),
+      style: const TextStyle(
+        fontSize: h1Size,
+      ),
     );
   }
 }
