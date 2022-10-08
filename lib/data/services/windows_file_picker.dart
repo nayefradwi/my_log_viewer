@@ -2,7 +2,7 @@ import 'package:file_picker/file_picker.dart';
 
 import 'file_picker.dart';
 
-class WindowsFilePicker implements IFilePicker {
+class DesktopFilePicker implements IFilePicker {
   @override
   Future<String?> pickFile(
     String title,

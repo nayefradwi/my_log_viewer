@@ -20,6 +20,7 @@ class HomeScreenBloc extends Cubit<HomeScreenState> {
       if (filePath == null) return _emitEmptyState();
       await _loadDatabase(filePath);
     } catch (e) {
+      debugPrint(e.toString());
       emit(HomeScreenErrorState("failed to load database"));
     }
   }
