@@ -73,7 +73,13 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
 
   List<AppLog> _filterByDateRange(List<AppLog> logs) {
     _fromUnFilteredLogs = false;
-    return logs;
+    List<AppLog> logsThatAreSameMoment = [];
+    for (AppLog log in logs) {
+      if (log.timeStamp.isBefore(_to!) && log.timeStamp.isAfter(_from!)) {
+        logsThatAreSameMoment.add(log);
+      }
+    }
+    return logsThatAreSameMoment;
   }
 
   List<AppLog> _filterBySearchTerm(List<AppLog> logs) {

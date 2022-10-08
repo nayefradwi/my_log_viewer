@@ -80,4 +80,10 @@ class _FilteringToolBarState extends State<FilteringToolBar> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 }

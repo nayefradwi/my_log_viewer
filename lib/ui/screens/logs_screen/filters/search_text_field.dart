@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:log_viewer/domain/logs_cubit/logs_bloc.dart';
-import 'package:log_viewer/domain/logs_cubit/logs_screen_states.dart';
-import 'package:path/path.dart';
 
-class SearchTextField extends StatelessWidget {
+class SearchTextField extends StatefulWidget {
   final TextEditingController controller;
   final void Function(String)? onSubmitted, onChanged;
   const SearchTextField({
@@ -15,13 +11,20 @@ class SearchTextField extends StatelessWidget {
   });
 
   @override
+  State<SearchTextField> createState() => _SearchTextFieldState();
+}
+
+class _SearchTextFieldState extends State<SearchTextField> {
+  @override
   Widget build(BuildContext context) {
     return TextField(
-      onSubmitted: onSubmitted,
-      controller: controller,
-      onChanged: onChanged,
+      onSubmitted: widget.onSubmitted,
+      controller: widget.controller,
+      onChanged: widget.onChanged,
       decoration: const InputDecoration(
-          hintText: "Search", suffixIcon: Icon(Icons.search)),
+        hintText: "Search",
+        suffixIcon: Icon(Icons.search),
+      ),
     );
   }
 }
