@@ -18,15 +18,15 @@ class LogsScreenLoadedState extends LogsScreenState {
 }
 
 class LogsScreenFilteringState extends LogsScreenState {
-  LogsScreenFilteringState() : super([]);
+  LogsScreenFilteringState(super.logs);
 }
 
 class LogsScreenFilterSelectedState extends LogsScreenFilteringState {
-  LogsScreenFilterSelectedState();
+  LogsScreenFilterSelectedState(super.logs);
 }
 
 class LogsScreenFilterClearedState extends LogsScreenFilteringState {
-  LogsScreenFilterClearedState();
+  LogsScreenFilterClearedState(super.logs);
 }
 
 class LogsScreenFilteredState extends LogsScreenState {

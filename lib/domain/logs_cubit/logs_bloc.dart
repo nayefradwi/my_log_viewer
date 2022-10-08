@@ -8,9 +8,7 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   final LogsRepo _repo;
   bool isAscending = true, _currentIsAscending = true;
 
-  bool get _fromUnFilteredLogs {
-    return _from == null || (_searchTerm != null && _searchTerm!.isNotEmpty);
-  }
+  bool _fromUnFilteredLogs = true;
 
   DateTime? _from, _to;
   String? _searchTerm;
@@ -32,39 +30,47 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
 
   void _filter() {
     List<AppLog> logs = _fromUnFilteredLogs ? [..._unFilteredLogs] : state.logs;
-    logs = _sort(logs);
-    logs = _filterDate(logs);
+    _sort(logs);
+    _filterDate(logs);
     logs = _filterBySearchTerm(logs);
     emit(LogsScreenFilteredState(logs));
   }
 
-  List<AppLog> _sort(List<AppLog> logs) {
-    if (isAscending == _currentIsAscending) return logs;
+  void _sort(List<AppLog> logs) {
+    if (isAscending == _currentIsAscending) return;
     if (isAscending) {
       logs.sort((a, b) => a.timeStamp.compareTo(b.timeStamp));
     } else {
       logs.sort((a, b) => b.timeStamp.compareTo(a.timeStamp));
     }
     _currentIsAscending = isAscending;
-    return logs;
   }
 
-  List<AppLog> _filterDate(List<AppLog> logs) {
-    if (_from == null) return logs;
+  void _filterDate(List<AppLog> logs) {
+    if (_from == null) return;
     if (_from != null && _to == null) return _filterByDate(logs);
     return _filterByDateRange(logs);
   }
 
-  List<AppLog> _filterByDate(List<AppLog> logs) {
-    return logs;
-  }
+  void _filterByDate(List<AppLog> logs) {}
 
-  List<AppLog> _filterByDateRange(List<AppLog> logs) {
-    return logs;
-  }
+  void _filterByDateRange(List<AppLog> logs) {}
 
   List<AppLog> _filterBySearchTerm(List<AppLog> logs) {
-    return logs;
+    if (_searchTerm == null) return logs;
+    List<AppLog> logsThatHaveSearchTerm = [];
+    for (AppLog log in logs) {
+      if (log.text.contains(_searchTerm!)) {
+        logsThatHaveSearchTerm.add(log);
+        continue;
+      }
+      if (log.hasMetadata(_searchTerm!)) {
+        logsThatHaveSearchTerm.add(log);
+      }
+    }
+    _searchTerm = null;
+    _fromUnFilteredLogs = false;
+    return logsThatHaveSearchTerm;
   }
 
   void clear() {
@@ -73,20 +79,21 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
     isAscending = true;
     _searchTerm = null;
     _currentIsAscending = isAscending;
+    _fromUnFilteredLogs = true;
+    emit(LogsScreenFilterClearedState(_unFilteredLogs));
     emit(LogsScreenLoadedState(_unFilteredLogs));
-    emit(LogsScreenFilterClearedState());
   }
 
   void changeSort(bool? isAscending) {
     if (isAscending == null) return;
     this.isAscending = isAscending;
-    emit(LogsScreenFilterSelectedState());
+    emit(LogsScreenFilterSelectedState(state.logs));
   }
 
   void changeFrom(DateTime? dateTime) {
     if (dateTime == null) return;
     _from = dateTime;
-    emit(LogsScreenFilterSelectedState());
+    emit(LogsScreenFilterSelectedState(state.logs));
   }
 
   void changeTo(DateTime? dateTime) {
@@ -97,7 +104,8 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   void changeSearchTerm(String? value) {
     if (value == null) return;
     _searchTerm = value.trim();
+    _fromUnFilteredLogs = _searchTerm!.isNotEmpty;
     if (state is LogsScreenFilterSelectedState) return;
-    emit(LogsScreenFilterSelectedState());
+    emit(LogsScreenFilterSelectedState(state.logs));
   }
 }

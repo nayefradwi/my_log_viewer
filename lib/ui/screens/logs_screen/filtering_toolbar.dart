@@ -28,7 +28,14 @@ class _FilteringToolBarState extends State<FilteringToolBar> {
         children: [
           SizedBox(
             width: 300,
-            child: SearchTextField(controller: controller),
+            child: SearchTextField(
+              controller: controller,
+              onSubmitted: (p0) {
+                controller.clear();
+                context.read<LogsScreenBloc>().confirmFilter();
+              },
+              onChanged: context.read<LogsScreenBloc>().changeSearchTerm,
+            ),
           ),
           const SizedBox(width: 16),
           DateSelectionWidget(

@@ -162,6 +162,11 @@ class AppLog {
     return AppLogType.debug;
   }
 
+  bool hasMetadata(String value) {
+    if (metadata == null) return false;
+    return metadata!.containsKey(value) || metadata!.containsValue(value);
+  }
+
   @override
   String toString() {
     return "$deviceTime - [ ${type.name}; $line ]: $fileName, $methodName, $text\nMetadata: ${metadata.toString()}\nTrace: $trace\nException: ${errorObject.toString()}";
