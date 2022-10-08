@@ -12,18 +12,20 @@ class MetadataWidget extends StatelessWidget {
     String key = metadata.key;
     String value = metadata.value.toString();
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "$key: ",
           style: const TextStyle(
               fontWeight: FontWeight.w500, fontStyle: FontStyle.italic),
         ),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 16,
-            color: Theme.of(context).colorScheme.primary,
-            fontWeight: FontWeight.bold,
+        Flexible(
+          child: Text(
+            value,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],
