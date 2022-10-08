@@ -20,7 +20,7 @@ class LogItemView extends StatelessWidget {
         children: [
           LogSideBorder(log: log),
           const SizedBox(width: 12),
-          LogInfoColumn(log: log),
+          Flexible(child: IntrinsicHeight(child: LogInfoColumn(log: log))),
         ],
       ),
     );

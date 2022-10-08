@@ -15,41 +15,45 @@ class LogInfoColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic>? metadata = log.metadata;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        OverheadTextW500Lsp1(
-          log.type.name.toUpperCase(),
-          color: log.isError ? Theme.of(context).errorColor : null,
-        ),
-        const SizedBox(height: 8),
-        MediumBodyText(log.text),
-        const SizedBox(height: 4),
-        // Meta data widget
-        // file name, method name, line
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                SmallBodyText(log.fileName),
-                const SizedBox(width: 15),
-                SmallBodyText(log.methodName),
-                const SizedBox(width: 15),
-                SmallBodyText(log.line),
-              ],
+    return Container(
+      color: Colors.green,
+      constraints: BoxConstraints.tightFor(height: 200),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          OverheadTextW500Lsp1(
+            log.type.name.toUpperCase(),
+            color: log.isError ? Theme.of(context).errorColor : null,
+          ),
+          const SizedBox(height: 8),
+          MediumBodyText(log.text),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              SmallBodyText(log.fileName),
+              const SizedBox(width: 15),
+              SmallBodyText(log.methodName),
+              const SizedBox(width: 15),
+              SmallBodyText(log.line),
+            ],
+          ),
+          if (metadata != null)
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: metadata.length,
+              itemBuilder: (context, index) {
+                MapEntry<String, dynamic> entry =
+                    metadata.entries.elementAt(index);
+                String key = entry.key;
+                String value = entry.value.toString();
+                return SmallBodyText("$key:$value");
+              },
             ),
-            // ListView.builder(
-            //   itemCount: 3,
-            //   physics: const NeverScrollableScrollPhysics(),
-            //   shrinkWrap: true,
-            //   itemBuilder: (context, index) => const Text("ddd"),
-            // )
-          ],
-        ),
-        const SizedBox(height: 4),
-        TimeStampAndStackTraceRow(log: log)
-      ],
+          const SizedBox(height: 4),
+          TimeStampAndStackTraceRow(log: log)
+        ],
+      ),
     );
   }
 }
