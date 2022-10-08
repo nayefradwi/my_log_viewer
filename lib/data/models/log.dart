@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/timestamp.dart';
 
@@ -26,6 +27,10 @@ class AppLog {
   String? trace;
   Object? errorObject;
   late Timestamp _timestamp;
+  DateTime get timeStamp {
+    return _timestamp.toDateTime();
+  }
+
   late AppLogType type;
 
   AppLog._({
@@ -112,6 +117,10 @@ class AppLog {
     };
   }
 
+  bool get isError {
+    return type == AppLogType.error;
+  }
+
   factory AppLog.fromJson(Map<String, dynamic> json) {
     AppLog log = AppLog._(
       methodName: json[methodNameKey] ?? "unknown method",
@@ -123,10 +132,14 @@ class AppLog {
     log.trace = json[traceKey] as String?;
     log.deviceTime = DateTime.parse(json[deviceTimeKey] as String);
     log.type = _getType(json[typeKey] as String);
-    log._timestamp = Timestamp.fromDateTime(log.deviceTime);
+    log._timestamp = json[timestampKey] ?? Timestamp.now();
     log.fileName = json[fileNameKey] ?? "unknown file";
-    log.line = json[lineKey] ?? "0";
+    log.line = _extractLine(json[lineKey]);
     return log;
+  }
+  static String _extractLine(String? line) {
+    if (line == null) return "0";
+    return line.replaceFirst(")", "");
   }
 
   static List<AppLog> listOfLogsFromJsonList(List<RecordSnapshot> jsonList) {
@@ -136,6 +149,7 @@ class AppLog {
         AppLog log = AppLog.fromJson(record.value);
         logs.add(log);
       } catch (e) {
+        debugPrint(e.toString());
         logs.add(AppLog.info(text: "failed to cast"));
       }
     }

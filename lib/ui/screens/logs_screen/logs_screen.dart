@@ -12,7 +12,6 @@ class LogsScreen extends StatelessWidget {
     // loading timer widget for when loading a file
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
         title: Text(
           "ID: ${context.read<LogsScreenBloc>().fileName}",
         ),
