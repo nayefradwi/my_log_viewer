@@ -18,12 +18,12 @@ class LogViewerApp extends StatelessWidget {
               fontFamily: GoogleFonts.poppins().fontFamily,
             ),
       ),
-      // darkTheme: darkTheme.copyWith(
-      //   textTheme: Theme.of(context).textTheme.apply(
-      //         bodyColor: lightBackground,
-      //         fontFamily: GoogleFonts.poppins().fontFamily,
-      //       ),
-      // ),
+      darkTheme: darkTheme.copyWith(
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: lightBackground,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+            ),
+      ),
       initialRoute: homeScreenRoute,
       onGenerateRoute: onGenerateRoute,
     );

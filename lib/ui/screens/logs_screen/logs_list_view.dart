@@ -15,7 +15,9 @@ class LogsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LogsScreenBloc, LogsScreenState>(
-      buildWhen: (previous, current) => current is LogsScreenLoadedState,
+      buildWhen: (previous, current) =>
+          current is LogsScreenLoadedState ||
+          current is LogsScreenFilteredState,
       builder: (context, state) {
         List<AppLog> logs = state.logs;
         if (logs.isEmpty) return const EmptyLogsListWidget();

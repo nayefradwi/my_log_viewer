@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_viewer/domain/logs_cubit/logs_bloc.dart';
 
+import 'filtering_toolbar.dart';
 import 'logs_list_view.dart';
 
 class LogsScreen extends StatelessWidget {
@@ -17,8 +18,11 @@ class LogsScreen extends StatelessWidget {
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: const [
-          // search tool bar (must be horizontally scrollable)
+          SizedBox(height: 8),
+          FilteringToolBar(),
+          SizedBox(height: 8),
           Expanded(child: LogsListView())
         ],
       ),
