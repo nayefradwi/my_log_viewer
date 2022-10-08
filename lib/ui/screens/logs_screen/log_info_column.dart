@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:log_viewer/data/models/log.dart';
 import 'package:log_viewer/ui/custom_widgets/texts/body.dart';
 import 'package:log_viewer/ui/custom_widgets/texts/overhead.dart';
+import 'package:log_viewer/ui/screens/logs_screen/meta_data_widget.dart';
 import 'package:log_viewer/ui/util/date_formatter.dart';
 
 class LogInfoColumn extends StatelessWidget {
@@ -28,6 +29,7 @@ class LogInfoColumn extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
+            color: const Color(0x1fffffff),
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: Theme.of(context).colorScheme.primary),
           ),
@@ -41,8 +43,8 @@ class LogInfoColumn extends StatelessWidget {
               SmallBodyText("line: ${log.line}"),
               const SizedBox(height: 2),
               if (metadata != null)
-                for (MapEntry entry in metadata.entries)
-                  SmallBodyText("${entry.key}:${entry.value}")
+                for (MapEntry<String, dynamic> entry in metadata.entries)
+                  MetadataWidget(metadata: entry)
             ],
           ),
         ),
