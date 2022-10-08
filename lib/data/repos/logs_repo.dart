@@ -1,3 +1,4 @@
+import 'package:log_viewer/data/models/log.dart';
 import 'package:path/path.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
@@ -14,6 +15,10 @@ class LogsRepo {
     required this.store,
     required this.fileName,
   });
+  Future<List<AppLog>> load() async {
+    final records = await store.find(db);
+    return AppLog.listOfLogsFromJsonList(records);
+  }
 
   static Future<LogsRepo> createLogsRepo(String dbPath) async {
     Database db = await databaseFactoryIo.openDatabase(

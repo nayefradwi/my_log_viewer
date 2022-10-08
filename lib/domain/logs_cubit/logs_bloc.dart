@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:log_viewer/data/models/log.dart';
 import 'package:log_viewer/data/repos/logs_repo.dart';
 
 import 'logs_screen_states.dart';
@@ -10,5 +11,8 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
     _loadLogs();
   }
 
-  Future<void> _loadLogs() async {}
+  Future<void> _loadLogs() async {
+    List<AppLog> logs = await _repo.load();
+    emit(LogsScreenLoadedState(logs));
+  }
 }

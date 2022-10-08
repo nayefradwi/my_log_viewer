@@ -22,7 +22,10 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: const [
             SizedBox(height: 12),
-            Center(child: H1Text(appTitle)),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0),
+              child: H1Text(appTitle),
+            ),
             Expanded(
               child: PrimaryRoundedBorderContainer(
                 child: FileInputWidget(),

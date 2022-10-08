@@ -1,12 +1,18 @@
 import 'package:log_viewer/data/models/log.dart';
 
-class LogsScreenState {}
+class LogsScreenState {
+  final List<AppLog> logs;
+  LogsScreenState(this.logs);
+}
 
-class LogsScreenLoadingState extends LogsScreenState {}
+class LogsScreenLoadingState extends LogsScreenState {
+  LogsScreenLoadingState() : super([]);
+}
 
-class LogsScreenErrorState extends LogsScreenState {}
+class LogsScreenErrorState extends LogsScreenState {
+  LogsScreenErrorState() : super([]);
+}
 
 class LogsScreenLoadedState extends LogsScreenState {
-  final List<AppLog> logs;
-  LogsScreenLoadedState(this.logs);
+  LogsScreenLoadedState(super.logs);
 }

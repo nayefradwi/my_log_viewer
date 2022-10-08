@@ -1,3 +1,4 @@
+import 'package:sembast/sembast.dart';
 import 'package:sembast/timestamp.dart';
 
 enum AppLogType {
@@ -126,6 +127,19 @@ class AppLog {
     log.fileName = json[fileNameKey] ?? "unknown file";
     log.line = json[lineKey] ?? "0";
     return log;
+  }
+
+  static List<AppLog> listOfLogsFromJsonList(List<RecordSnapshot> jsonList) {
+    List<AppLog> logs = [];
+    for (RecordSnapshot record in jsonList) {
+      try {
+        AppLog log = AppLog.fromJson(record.value);
+        logs.add(log);
+      } catch (e) {
+        logs.add(AppLog.info(text: "failed to cast"));
+      }
+    }
+    return logs;
   }
 
   static AppLogType _getType(String type) {
