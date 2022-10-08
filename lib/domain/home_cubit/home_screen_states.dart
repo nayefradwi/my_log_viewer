@@ -1,10 +1,12 @@
+import 'package:log_viewer/data/repos/logs_database.dart';
+
 class HomeScreenState {}
 
 class HomeScreenLoadingState extends HomeScreenState {}
 
 class HomeScreenFileChosenState extends HomeScreenState {
-  final String filePath;
-  HomeScreenFileChosenState(this.filePath);
+  final LogsDatabase logsDatabase;
+  HomeScreenFileChosenState(this.logsDatabase);
 }
 
 class HomeScreenErrorState extends HomeScreenState {

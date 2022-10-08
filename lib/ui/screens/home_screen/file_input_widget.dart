@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:log_viewer/domain/home_cubit/home_screen_bloc.dart';
 import 'package:log_viewer/ui/custom_widgets/buttons/primary_button.dart';
 import 'package:log_viewer/ui/custom_widgets/texts/h1.dart';
 
@@ -18,7 +20,7 @@ class FileInputWidget extends StatelessWidget {
         const SizedBox(height: 16),
         PrimaryElevatedButton(
           label: "Load File",
-          onPressed: () {},
+          onPressed: context.read<HomeScreenBloc>().pickFile,
         )
       ],
     );

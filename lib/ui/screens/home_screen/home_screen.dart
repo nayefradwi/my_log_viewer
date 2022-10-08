@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_viewer/app.dart';
+import 'package:log_viewer/domain/home_cubit/home_screen_bloc.dart';
+import 'package:log_viewer/domain/home_cubit/home_screen_states.dart';
 import 'package:log_viewer/ui/custom_widgets/containers/primary_container.dart';
+import 'package:log_viewer/ui/custom_widgets/notifications/app_snackbar.dart';
 import 'package:log_viewer/ui/custom_widgets/texts/h1.dart';
 
 import 'file_input_widget.dart';
@@ -10,19 +14,30 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
-          SizedBox(height: 12),
-          Center(child: H1Text(appTitle)),
-          Expanded(
-            child: PrimaryRoundedBorderContainer(
-              child: FileInputWidget(),
-            ),
-          )
-        ],
+    return BlocListener<HomeScreenBloc, HomeScreenState>(
+      listener: _listener,
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: const [
+            SizedBox(height: 12),
+            Center(child: H1Text(appTitle)),
+            Expanded(
+              child: PrimaryRoundedBorderContainer(
+                child: FileInputWidget(),
+              ),
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  void _listener(BuildContext context, HomeScreenState state) {
+    if (state is HomeScreenErrorState) {
+      return AppSnackBar.show(context, state.errorMessage);
+    } else if (state is HomeScreenFileChosenState) {
+      return AppSnackBar.show(context, "nice");
+    }
   }
 }

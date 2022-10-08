@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+const Color darkBackground = Color(0xff1b1b1e);
+const Color lightBackground = Color(0xfffefbfe);
 ThemeData lightTheme = ThemeData.from(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSwatch(
-    backgroundColor: const Color(0xfffefbfe),
+    backgroundColor: lightBackground,
     primarySwatch: getMaterialColorFromColor(const Color(0xff486598)),
     brightness: Brightness.light,
   ),
@@ -12,7 +14,7 @@ ThemeData lightTheme = ThemeData.from(
 ThemeData darkTheme = ThemeData.from(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSwatch(
-    backgroundColor: const Color(0xff1b1b1e),
+    backgroundColor: darkBackground,
     primarySwatch: getMaterialColorFromColor(const Color(0xffa7c2fb)),
     brightness: Brightness.dark,
   ),
