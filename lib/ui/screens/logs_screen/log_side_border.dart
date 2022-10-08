@@ -18,9 +18,7 @@ class LogSideBorder extends StatelessWidget {
           color: log.isError ? Theme.of(context).errorColor : Colors.grey,
         ),
         const SizedBox(height: 8),
-        const Expanded(
-          child: VerticalDivider(thickness: 2),
-        ),
+        const Expanded(child: VerticalDivider(thickness: 2)),
       ],
     );
   }

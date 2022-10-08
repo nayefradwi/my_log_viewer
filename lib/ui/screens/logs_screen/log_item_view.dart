@@ -14,38 +14,15 @@ class LogItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        IntrinsicHeight(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 80),
-            child: MainContentRow(log: log),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class MainContentRow extends StatelessWidget {
-  const MainContentRow({
-    Key? key,
-    required this.log,
-  }) : super(key: key);
-
-  final AppLog log;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        LogSideBorder(log: log),
-        const SizedBox(width: 12),
-        Flexible(
-          child: LogInfoColumn(log: log),
-        ),
-      ],
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          LogSideBorder(log: log),
+          const SizedBox(width: 12),
+          LogInfoColumn(log: log),
+        ],
+      ),
     );
   }
 }

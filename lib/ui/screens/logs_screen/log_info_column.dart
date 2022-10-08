@@ -27,21 +27,25 @@ class LogInfoColumn extends StatelessWidget {
         const SizedBox(height: 4),
         // Meta data widget
         // file name, method name, line
-        Container(
-          decoration: const BoxDecoration(),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  SmallBodyText(log.fileName),
-                  const SizedBox(width: 15),
-                  SmallBodyText(log.methodName),
-                  const SizedBox(width: 15),
-                  SmallBodyText(log.line),
-                ],
-              ),
-            ],
-          ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                SmallBodyText(log.fileName),
+                const SizedBox(width: 15),
+                SmallBodyText(log.methodName),
+                const SizedBox(width: 15),
+                SmallBodyText(log.line),
+              ],
+            ),
+            // ListView.builder(
+            //   itemCount: 3,
+            //   physics: const NeverScrollableScrollPhysics(),
+            //   shrinkWrap: true,
+            //   itemBuilder: (context, index) => const Text("ddd"),
+            // )
+          ],
         ),
         const SizedBox(height: 4),
         TimeStampAndStackTraceRow(log: log)
