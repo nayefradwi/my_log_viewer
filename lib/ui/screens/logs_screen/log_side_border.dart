@@ -11,18 +11,15 @@ class LogSideBorder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: Column(
-        children: [
-          Icon(
-            log.isError ? Icons.cancel_outlined : Icons.info,
-            color: log.isError ? Theme.of(context).errorColor : Colors.grey,
-          ),
-          const SizedBox(height: 8),
-          const Expanded(child: VerticalDivider(thickness: 2)),
-        ],
-      ),
+    return Column(
+      children: [
+        Icon(
+          log.isError ? Icons.cancel_outlined : Icons.info,
+          color: log.isError ? Theme.of(context).errorColor : Colors.grey,
+        ),
+        const SizedBox(height: 8),
+        const Expanded(child: VerticalDivider(thickness: 2)),
+      ],
     );
   }
 }

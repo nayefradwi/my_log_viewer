@@ -15,45 +15,40 @@ class LogInfoColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic>? metadata = log.metadata;
-    return Container(
-      color: Colors.green,
-      constraints: BoxConstraints.tightFor(height: 200),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          OverheadTextW500Lsp1(
-            log.type.name.toUpperCase(),
-            color: log.isError ? Theme.of(context).errorColor : null,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        OverheadTextW500Lsp1(
+          log.type.name.toUpperCase(),
+          color: log.isError ? Theme.of(context).errorColor : null,
+        ),
+        const SizedBox(height: 8),
+        MediumBodyText(log.text),
+        const SizedBox(height: 4),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Theme.of(context).colorScheme.primary),
           ),
-          const SizedBox(height: 8),
-          MediumBodyText(log.text),
-          const SizedBox(height: 4),
-          Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SmallBodyText(log.fileName),
-              const SizedBox(width: 15),
-              SmallBodyText(log.methodName),
-              const SizedBox(width: 15),
-              SmallBodyText(log.line),
+              SmallBodyText("file: ${log.fileName}"),
+              const SizedBox(height: 2),
+              SmallBodyText("method: ${log.methodName}"),
+              const SizedBox(height: 2),
+              SmallBodyText("line: ${log.line}"),
+              const SizedBox(height: 2),
+              if (metadata != null)
+                for (MapEntry entry in metadata.entries)
+                  SmallBodyText("${entry.key}:${entry.value}")
             ],
           ),
-          if (metadata != null)
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: metadata.length,
-              itemBuilder: (context, index) {
-                MapEntry<String, dynamic> entry =
-                    metadata.entries.elementAt(index);
-                String key = entry.key;
-                String value = entry.value.toString();
-                return SmallBodyText("$key:$value");
-              },
-            ),
-          const SizedBox(height: 4),
-          TimeStampAndStackTraceRow(log: log)
-        ],
-      ),
+        ),
+        const SizedBox(height: 4),
+        TimeStampAndStackTraceRow(log: log)
+      ],
     );
   }
 }
