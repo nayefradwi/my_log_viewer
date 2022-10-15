@@ -14,13 +14,13 @@ class MetadataWidget extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        SelectableText(
           "$key: ",
           style: const TextStyle(
               fontWeight: FontWeight.w500, fontStyle: FontStyle.italic),
         ),
         Flexible(
-          child: Text(
+          child: SelectableText(
             value,
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,

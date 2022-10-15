@@ -10,7 +10,7 @@ class MediumBodyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return SelectableText(
       text,
       textAlign: align,
       style: const TextStyle(
