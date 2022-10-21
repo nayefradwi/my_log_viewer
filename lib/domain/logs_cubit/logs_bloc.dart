@@ -8,8 +8,6 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   final LogsRepo _repo;
   bool isAscending = true, _currentIsAscending = true;
 
-  bool _fromUnFilteredLogs = true;
-
   DateTime? _from, _to;
   String? _searchTerm;
   List<AppLog> _unFilteredLogs = [];
@@ -29,7 +27,7 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   }
 
   void _filter() {
-    List<AppLog> logs = _fromUnFilteredLogs ? [..._unFilteredLogs] : state.logs;
+    List<AppLog> logs = [..._unFilteredLogs];
     _sort(logs);
     logs = _filterDate(logs);
     logs = _filterBySearchTerm(logs);
@@ -59,7 +57,6 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
         logsThatAreSameMoment.add(log);
       }
     }
-    _fromUnFilteredLogs = false;
     return logsThatAreSameMoment;
   }
 
@@ -72,7 +69,6 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   }
 
   List<AppLog> _filterByDateRange(List<AppLog> logs) {
-    _fromUnFilteredLogs = false;
     List<AppLog> logsThatAreSameMoment = [];
     for (AppLog log in logs) {
       if (log.timeStamp.isBefore(_to!) && log.timeStamp.isAfter(_from!)) {
@@ -95,7 +91,6 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
       }
     }
     _searchTerm = null;
-    _fromUnFilteredLogs = false;
     return logsThatHaveSearchTerm;
   }
 
@@ -105,7 +100,6 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
     isAscending = true;
     _searchTerm = null;
     _currentIsAscending = isAscending;
-    _fromUnFilteredLogs = true;
     emit(LogsScreenFilterClearedState(_unFilteredLogs));
     emit(LogsScreenLoadedState(_unFilteredLogs));
   }
@@ -130,7 +124,6 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   void changeSearchTerm(String? value) {
     if (value == null) return;
     _searchTerm = value.trim();
-    _fromUnFilteredLogs = _searchTerm!.isNotEmpty;
     if (state is LogsScreenFilterSelectedState) return;
     emit(LogsScreenFilterSelectedState(state.logs));
   }

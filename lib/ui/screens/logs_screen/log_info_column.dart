@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:log_viewer/data/models/log.dart';
 import 'package:log_viewer/ui/custom_widgets/texts/body.dart';
+import 'package:log_viewer/ui/custom_widgets/texts/h2.dart';
 import 'package:log_viewer/ui/custom_widgets/texts/overhead.dart';
 import 'package:log_viewer/ui/screens/logs_screen/meta_data_widget.dart';
 import 'package:log_viewer/ui/util/date_formatter.dart';
@@ -77,10 +78,36 @@ class TimeStampAndStackTraceRow extends StatelessWidget {
         const SizedBox(width: 4),
         if (log.isError)
           TextButton(
-            onPressed: () {},
+            onPressed: () => showStackTrace(context),
             child: const OverheadTextW500Lsp1("view stacktrace"),
           ),
       ],
+    );
+  }
+
+  void showStackTrace(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 4),
+                  const H2Text("StackTrace"),
+                  const SizedBox(height: 16),
+                  MediumBodyText(log.trace ?? "no trace"),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
