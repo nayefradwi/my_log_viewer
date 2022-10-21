@@ -69,7 +69,7 @@ class TimeStampAndStackTraceRow extends StatelessWidget {
       children: [
         const Icon(Icons.schedule, size: 15),
         const SizedBox(width: 4),
-        OverheadTextW500Lsp1(
+        SelectableOverheadTextW500Lsp1(
           formatDayMonthHourMinuteSeconds(
             log.timeStamp,
           ),
