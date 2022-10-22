@@ -45,15 +45,16 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   }
 
   List<AppLog> _filterDate(List<AppLog> logs) {
-    if (_from == null) return logs;
-    if (_from != null && _to == null) return _filterByDate(logs);
-    return _filterByDateRange(logs);
+    if (_from != null && _to != null) return _filterByDateRange(logs);
+    if (_from == null && _to == null) return logs;
+    return _filterByDate(logs);
   }
 
   List<AppLog> _filterByDate(List<AppLog> logs) {
     List<AppLog> logsThatAreSameMoment = [];
+    DateTime dateFilter = _from ?? _to!;
     for (AppLog log in logs) {
-      if (_isSameMoment(log.timeStamp, _from!)) {
+      if (_isSameMoment(log.timeStamp, dateFilter)) {
         logsThatAreSameMoment.add(log);
       }
     }
@@ -119,6 +120,7 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   void changeTo(DateTime? dateTime) {
     if (dateTime == null) return;
     _to = dateTime;
+    emit(LogsScreenFilterSelectedState(state.logs));
   }
 
   void changeSearchTerm(String? value) {
