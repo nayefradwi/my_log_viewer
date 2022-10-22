@@ -127,4 +127,11 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
     if (state is LogsScreenFilterSelectedState) return;
     emit(LogsScreenFilterSelectedState(state.logs));
   }
+
+  DateTime getFromInitialDate() {
+    if (_unFilteredLogs.isEmpty) return DateTime.now();
+    AppLog firstLog = _unFilteredLogs.first;
+    return DateTime(firstLog.timeStamp.year, firstLog.timeStamp.month,
+        firstLog.timeStamp.day);
+  }
 }
