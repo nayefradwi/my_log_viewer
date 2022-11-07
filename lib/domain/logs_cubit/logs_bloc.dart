@@ -28,17 +28,11 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   }
 
   void _filter() {
-    List<AppLog> logs =
-        _isFromFilteredLogs() ? state.logs : [..._unFilteredLogs];
+    List<AppLog> logs = [..._unFilteredLogs];
     _sort(logs);
     logs = _filterDate(logs);
     logs = _filterBySearchTerm(logs);
     emit(LogsScreenFilteredState(logs));
-  }
-
-  bool _isFromFilteredLogs() {
-    return (_searchTerms.isNotEmpty && _searchTerm != null) ||
-        _searchTerms.length > 1;
   }
 
   void _sort(List<AppLog> logs) {
@@ -89,18 +83,21 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   List<AppLog> _filterBySearchTerm(List<AppLog> logs) {
     if (_searchTerm == null) return logs;
     _searchTerms.add(_searchTerm!);
-    List<AppLog> logsThatHaveSearchTerm = [];
-    for (AppLog log in logs) {
-      if (log.text.contains(_searchTerm!)) {
-        logsThatHaveSearchTerm.add(log);
-        continue;
+    for (String term in searchTerms) {
+      List<AppLog> logsThatHaveSearchTerm = [];
+      for (AppLog log in logs) {
+        if (log.text.contains(term)) {
+          logsThatHaveSearchTerm.add(log);
+          continue;
+        }
+        if (log.hasMetadata(term)) {
+          logsThatHaveSearchTerm.add(log);
+        }
       }
-      if (log.hasMetadata(_searchTerm!)) {
-        logsThatHaveSearchTerm.add(log);
-      }
+      logs = logsThatHaveSearchTerm;
     }
     _searchTerm = null;
-    return logsThatHaveSearchTerm;
+    return logs;
   }
 
   void clear() {
