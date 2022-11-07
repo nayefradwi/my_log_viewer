@@ -2,7 +2,7 @@ import 'package:file_picker/file_picker.dart';
 
 import 'file_picker.dart';
 
-class DesktopFilePicker implements IFilePicker {
+class GenericFilePicker implements IFilePicker {
   @override
   Future<String?> pickFile(
     String title,
@@ -14,7 +14,7 @@ class DesktopFilePicker implements IFilePicker {
       allowedExtensions: supportedExtensions,
       lockParentWindow: true,
     );
-    return result?.files.single.name;
+    return result?.files.single.path;
   }
 
   @override
@@ -24,6 +24,6 @@ class DesktopFilePicker implements IFilePicker {
       type: FileType.any,
       lockParentWindow: true,
     );
-    return result?.files.single.name;
+    return result?.files.single.path;
   }
 }
