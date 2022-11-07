@@ -25,7 +25,7 @@ class LogInfoColumn extends StatelessWidget {
           color: log.isError ? Theme.of(context).errorColor : null,
         ),
         const SizedBox(height: 8),
-        MediumBodyText(log.text),
+        SelectableMediumBodyText(log.text),
         const SizedBox(height: 4),
         Container(
           padding: const EdgeInsets.all(8),
@@ -101,7 +101,7 @@ class TimeStampAndStackTraceRow extends StatelessWidget {
                   const SizedBox(height: 4),
                   const H2Text("StackTrace"),
                   const SizedBox(height: 16),
-                  MediumBodyText(log.trace ?? "no trace"),
+                  SelectableMediumBodyText(log.trace ?? "no trace"),
                 ],
               ),
             ),

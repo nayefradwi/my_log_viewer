@@ -7,7 +7,8 @@ import 'logs_screen_states.dart';
 class LogsScreenBloc extends Cubit<LogsScreenState> {
   final LogsRepo _repo;
   bool isAscending = true, _currentIsAscending = true;
-
+  final List<String> _searchTerms = [];
+  List<String> get searchTerms => _searchTerms;
   DateTime? _from, _to;
   String? _searchTerm;
   List<AppLog> _unFilteredLogs = [];
@@ -27,11 +28,17 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   }
 
   void _filter() {
-    List<AppLog> logs = [..._unFilteredLogs];
+    List<AppLog> logs =
+        _isFromFilteredLogs() ? state.logs : [..._unFilteredLogs];
     _sort(logs);
     logs = _filterDate(logs);
     logs = _filterBySearchTerm(logs);
     emit(LogsScreenFilteredState(logs));
+  }
+
+  bool _isFromFilteredLogs() {
+    return (_searchTerms.isNotEmpty && _searchTerm != null) ||
+        _searchTerms.length > 1;
   }
 
   void _sort(List<AppLog> logs) {
@@ -81,6 +88,7 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
 
   List<AppLog> _filterBySearchTerm(List<AppLog> logs) {
     if (_searchTerm == null) return logs;
+    _searchTerms.add(_searchTerm!);
     List<AppLog> logsThatHaveSearchTerm = [];
     for (AppLog log in logs) {
       if (log.text.contains(_searchTerm!)) {
@@ -101,6 +109,7 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
     isAscending = true;
     _searchTerm = null;
     _currentIsAscending = isAscending;
+    _searchTerms.clear();
     emit(LogsScreenFilterClearedState(_unFilteredLogs));
     emit(LogsScreenLoadedState(_unFilteredLogs));
   }
