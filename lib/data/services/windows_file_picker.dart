@@ -16,4 +16,14 @@ class DesktopFilePicker implements IFilePicker {
     );
     return result?.files.single.name;
   }
+
+  @override
+  Future<String?> pickAnyFile(String title) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      dialogTitle: title,
+      type: FileType.any,
+      lockParentWindow: true,
+    );
+    return result?.files.single.name;
+  }
 }

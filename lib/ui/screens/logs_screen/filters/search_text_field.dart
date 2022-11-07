@@ -17,13 +17,16 @@ class SearchTextField extends StatefulWidget {
 class _SearchTextFieldState extends State<SearchTextField> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onSubmitted: widget.onSubmitted,
-      controller: widget.controller,
-      onChanged: widget.onChanged,
-      decoration: const InputDecoration(
-        hintText: "Search",
-        suffixIcon: Icon(Icons.search),
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0),
+      child: TextField(
+        onSubmitted: widget.onSubmitted,
+        controller: widget.controller,
+        onChanged: widget.onChanged,
+        decoration: const InputDecoration(
+          hintText: "Search",
+          suffixIcon: Icon(Icons.search),
+        ),
       ),
     );
   }

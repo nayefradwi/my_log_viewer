@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:log_viewer/app.dart';
@@ -18,20 +20,24 @@ class HomeScreen extends StatelessWidget {
     return BlocListener<HomeScreenBloc, HomeScreenState>(
       listener: _listener,
       child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
-            SizedBox(height: 12),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0),
-              child: H1Text(appTitle),
-            ),
-            Expanded(
-              child: PrimaryRoundedBorderContainer(
-                child: FileInputWidget(),
+        body: SafeArea(
+          top: Platform.isAndroid || Platform.isIOS,
+          bottom: Platform.isAndroid || Platform.isIOS,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: const [
+              SizedBox(height: 12),
+              Padding(
+                padding: EdgeInsets.only(left: 20.0),
+                child: H1Text(appTitle),
               ),
-            )
-          ],
+              Expanded(
+                child: PrimaryRoundedBorderContainer(
+                  child: FileInputWidget(),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -5,17 +5,14 @@ import 'package:log_viewer/data/services/file_picker.dart';
 
 import 'home_screen_states.dart';
 
-const List<String> supportedFileExtensions = ["*"];
-
 class HomeScreenBloc extends Cubit<HomeScreenState> {
   final IFilePicker filePicker;
   HomeScreenBloc(this.filePicker) : super(HomeScreenState());
 
   void pickFile({String? fileDropped}) async {
     try {
-      String? filePath = fileDropped ??
-          await filePicker.pickFile(
-              "Select Logs File", supportedFileExtensions);
+      String? filePath =
+          fileDropped ?? await filePicker.pickAnyFile("Select Logs File");
       emit(HomeScreenLoadingState());
       if (filePath == null) return _emitEmptyState();
       await _loadDatabase(filePath);
