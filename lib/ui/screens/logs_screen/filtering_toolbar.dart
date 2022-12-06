@@ -23,60 +23,63 @@ class _FilteringToolBarState extends State<FilteringToolBar> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(
-            width: 300,
-            child: SearchTextField(
-              controller: controller,
-              onSubmitted: (p0) {
-                controller.clear();
-                context.read<LogsScreenBloc>().confirmFilter();
-              },
-              onChanged: context.read<LogsScreenBloc>().changeSearchTerm,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(
+              width: 300,
+              child: SearchTextField(
+                controller: controller,
+                onSubmitted: (p0) {
+                  controller.clear();
+                  context.read<LogsScreenBloc>().confirmFilter();
+                },
+                onChanged: context.read<LogsScreenBloc>().changeSearchTerm,
+              ),
             ),
-          ),
-          const SizedBox(width: 16),
-          DateSelectionWidget(
-            label: "From",
-            onDateSelected: context.read<LogsScreenBloc>().changeFrom,
-          ),
-          const SizedBox(width: 8),
-          DateSelectionWidget(
-            label: "To",
-            onDateSelected: context.read<LogsScreenBloc>().changeTo,
-          ),
-          const SizedBox(width: 8),
-          SortingToggle(
-            onSortingSwitched: context.read<LogsScreenBloc>().changeSort,
-          ),
-          const SizedBox(width: 8),
-          BlocBuilder<LogsScreenBloc, LogsScreenState>(
-            builder: (context, state) {
-              bool isDisabled = state is! LogsScreenFilterSelectedState;
-              return PrimaryElevatedButton(
-                label: "confirm",
-                onPressed: isDisabled
-                    ? null
-                    : context.read<LogsScreenBloc>().confirmFilter,
-              );
-            },
-          ),
-          const SizedBox(width: 8),
-          BlocBuilder<LogsScreenBloc, LogsScreenState>(
-            builder: (context, state) {
-              bool isDisabled = state is! LogsScreenFilteredState &&
-                  state is! LogsScreenFilterSelectedState;
-              return ErrorElevatedButton(
-                label: "clear",
-                onPressed:
-                    isDisabled ? null : context.read<LogsScreenBloc>().clear,
-              );
-            },
-          ),
-          const SizedBox(width: 16),
-        ],
+            const SizedBox(width: 16),
+            DateSelectionWidget(
+              label: "From",
+              onDateSelected: context.read<LogsScreenBloc>().changeFrom,
+            ),
+            const SizedBox(width: 8),
+            DateSelectionWidget(
+              label: "To",
+              onDateSelected: context.read<LogsScreenBloc>().changeTo,
+            ),
+            const SizedBox(width: 8),
+            SortingToggle(
+              onSortingSwitched: context.read<LogsScreenBloc>().changeSort,
+            ),
+            const SizedBox(width: 8),
+            BlocBuilder<LogsScreenBloc, LogsScreenState>(
+              builder: (context, state) {
+                bool isDisabled = state is! LogsScreenFilterSelectedState;
+                return PrimaryElevatedButton(
+                  label: "confirm",
+                  onPressed: isDisabled
+                      ? null
+                      : context.read<LogsScreenBloc>().confirmFilter,
+                );
+              },
+            ),
+            const SizedBox(width: 8),
+            BlocBuilder<LogsScreenBloc, LogsScreenState>(
+              builder: (context, state) {
+                bool isDisabled = state is! LogsScreenFilteredState &&
+                    state is! LogsScreenFilterSelectedState;
+                return ErrorElevatedButton(
+                  label: "clear",
+                  onPressed:
+                      isDisabled ? null : context.read<LogsScreenBloc>().clear,
+                );
+              },
+            ),
+            const SizedBox(width: 16),
+          ],
+        ),
       ),
     );
   }

@@ -81,8 +81,7 @@ class LogsScreenBloc extends Cubit<LogsScreenState> {
   }
 
   List<AppLog> _filterBySearchTerm(List<AppLog> logs) {
-    if (_searchTerm == null) return logs;
-    _searchTerms.add(_searchTerm!);
+    if (_searchTerm != null) _searchTerms.add(_searchTerm!);
     for (String term in searchTerms) {
       List<AppLog> logsThatHaveSearchTerm = [];
       for (AppLog log in logs) {
