@@ -146,7 +146,7 @@ class AppLog {
     List<AppLog> logs = [];
     for (RecordSnapshot record in jsonList) {
       try {
-        AppLog log = AppLog.fromJson(record.value);
+        AppLog log = AppLog.fromJson(record.value as Map<String, dynamic>);
         logs.add(log);
       } catch (e) {
         debugPrint(e.toString());

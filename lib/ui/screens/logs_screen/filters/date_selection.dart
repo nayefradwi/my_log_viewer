@@ -63,6 +63,7 @@ class _DateSelectionState extends State<DateSelectionWidget> {
       lastDate: initial.add(oneYear),
     );
     if (date == null) return;
+    // ignore: use_build_context_synchronously
     TimeOfDay? time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),

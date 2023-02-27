@@ -22,7 +22,7 @@ class LogInfoColumn extends StatelessWidget {
       children: [
         OverheadTextW500Lsp1(
           log.type.name.toUpperCase(),
-          color: log.isError ? Theme.of(context).errorColor : null,
+          color: log.isError ? Theme.of(context).colorScheme.error : null,
         ),
         const SizedBox(height: 8),
         SelectableMediumBodyText(log.text),
